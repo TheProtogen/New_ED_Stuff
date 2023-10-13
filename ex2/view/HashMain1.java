@@ -12,13 +12,13 @@ public class HashMain1 {
 
     public static void main(String[] args) {
 
-        HashMap<Integer, String> hashMap = new HashMap<Integer,String>();
+        HashMap<Integer, String> hashMap = new HashMap<>();
 
         String[] escolhasDisponiveis = {"Adicionar entidades","Imprimir dados","Pesquisar nome","Destruir nome","Sair"};
 
         boolean locked = true;
         while(locked) {
-            int escolha = JOptionPane.showOptionDialog(null, "TEXTO","TITULO", JOptionPane.INFORMATION_MESSAGE, JOptionPane.YES_NO_CANCEL_OPTION,
+            int escolha = JOptionPane.showOptionDialog(null, "TEXTO","TITULO", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
                     null,escolhasDisponiveis,escolhasDisponiveis[0]);
 
 
@@ -35,9 +35,10 @@ public class HashMain1 {
                     pesquisarNome(hashMap,pessoaPesquisada.toUpperCase());
                     break;
                 case 3:
-
+                    String pessoaDestruida = JOptionPane.showInputDialog("Digite um número");
+                    destruirNome(hashMap,pessoaDestruida.toUpperCase());
                     break;
-                default:
+                default: //yeah
                     locked = false;
                     break;
             }
@@ -46,6 +47,14 @@ public class HashMain1 {
 
 
 
+    }
+
+    private static void destruirNome(HashMap<Integer, String> hashMap, String pessoaDestruida) {
+        if(hashMap.containsValue(pessoaDestruida)) {
+            JOptionPane.showMessageDialog(null,"Nome localizado, destruindo...");
+            //Destruição do nome
+            hashMap.remove(pessoaDestruida);
+        }
     }
 
     private static void pesquisarNome(HashMap<Integer, String> hashMap, String pessoaPesquisada) {

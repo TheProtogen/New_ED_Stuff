@@ -9,25 +9,25 @@ import javax.swing.JOptionPane;
 public class HashMain {
 
     public static void main(String[] args) {
-        //Cria o hashmap onde vai ir os nomes, junto com a letra na ordem
-        HashMap<Character, List<String>> hashMap = new HashMap<Character, List<String>>();
+        //Cria o hashmap onde vai ir os nomes, com a letra na ordem
+        HashMap<Character, List<String>> hashMap = new HashMap<>();
 
         //Inicializa o hash com a lista, tudo vazio
         char[] alphabet = makeAlphabet();
-        for (int i = 0; i < alphabet.length; i++) {
-            hashMap.put(alphabet[i], new ArrayList<String>());
+        for (char c : alphabet) {
+            hashMap.put(c, new ArrayList<>());
         }
 
         boolean telaInicial = true;
         String[] escolhasDisponiveis = {"Adicionar entidades","Imprimir dados","Pesquisar nome","Destruir nome","Sair"};
         while(telaInicial) {
-            int escolha = JOptionPane.showOptionDialog(null, "Escolha...","TITULO GENÉRICO BLAH BLAH BLAH", JOptionPane.INFORMATION_MESSAGE, JOptionPane.YES_NO_CANCEL_OPTION,
+            int escolha = JOptionPane.showOptionDialog(null, "Escolha...","Armazenador de dados", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
                     null,escolhasDisponiveis,escolhasDisponiveis[0]);
 
             //Switch case madness
             switch(escolha) {
                 case 0:
-                    int pessoasAdicionar = Integer.parseInt(JOptionPane.showInputDialog("Digite um número"));
+                    int pessoasAdicionar = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade de nomes que queres adicionar",4));
                     adicionarAoHash(hashMap,alphabet,pessoasAdicionar);
                     break;
                 case 1:
@@ -93,11 +93,11 @@ public class HashMain {
             //pega o nome
             nome[i] = JOptionPane.showInputDialog(null,"Insira o nome aqui").toUpperCase();
 
-            //verifica a primeira letra e tals
-            for(int j = 0; j < alphabet.length; j++) {
-                if (nome[i].charAt(0) == alphabet[j]) {
+            //verifica a primeira letra e faz alguma coisa
+            for (char c : alphabet) {
+                if (nome[i].charAt(0) == c) {
                     //coloca na lista
-                    hashMap.get(alphabet[j]).add(nome[i]);
+                    hashMap.get(c).add(nome[i]);
                     break;
                 }
             }
@@ -106,8 +106,7 @@ public class HashMain {
 
     //É só o alfabeto
     public static char[] makeAlphabet() {
-        char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
-        return alphabet;
+        return "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
     }
 
 
