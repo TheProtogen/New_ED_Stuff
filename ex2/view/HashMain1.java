@@ -6,15 +6,16 @@ import javax.swing.JOptionPane;
 
 public class HashMain1 {
 
+    public static final int MEMORY_TOTAL = 50;
     public static Random random = new Random();
     public static int[] vetores = new int[50];
     public static int contador = 0;
 
     public static void main(String[] args) {
 
-        HashMap<Integer, String> hashMap = new HashMap<>();
+        HashMap<Integer, String> hashMap = new HashMap<>(50);
 
-        String[] escolhasDisponiveis = {"Adicionar entidades","Imprimir dados","Pesquisar nome","Destruir nome","Sair"};
+        String[] escolhasDisponiveis = {"Adicionar entidades","Imprimir dados","Pesquisar nome","Destruir nome","Status espaço","Sair"};
 
         boolean locked = true;
         while(locked) {
@@ -38,6 +39,9 @@ public class HashMain1 {
                     String pessoaDestruida = JOptionPane.showInputDialog("Digite um número");
                     destruirNome(hashMap,pessoaDestruida.toUpperCase());
                     break;
+                case 4:
+                    verificarMemory(hashMap);
+                    break;
                 default: //yeah
                     locked = false;
                     break;
@@ -49,24 +53,52 @@ public class HashMain1 {
 
     }
 
+    private static void verificarMemory(HashMap<Integer, String> hashMap) {
+        String statusMemory;
+        if (hashMap.size() == MEMORY_TOTAL) {
+            statusMemory = "MEMÓRIA CHEIA";
+        } else {
+            statusMemory = "MEMÓRIA DISPONÍVEL: "+(MEMORY_TOTAL - hashMap.size());
+        }
+        JOptionPane.showMessageDialog(null,"> Contador: "+contador+"\n> HashMap.size(): "+
+                hashMap.size()+"\n"+statusMemory);
+    }
+
+    //[IMPORTANTE] útil para localizar a chave de um valor
+    public static <K, V> K getKey (HashMap<K, V> hashMap, V nomePesquisarChave) {
+        for (HashMap.Entry<K, V> entry : hashMap.entrySet()) {
+            if (entry.getValue().equals(nomePesquisarChave)) {
+                return entry.getKey(); // valor localizado: retorna a chave
+            }
+        }
+        return null; // valor não localiado
+    }
+
     private static void destruirNome(HashMap<Integer, String> hashMap, String pessoaDestruida) {
-        if(hashMap.containsValue(pessoaDestruida)) {
-            JOptionPane.showMessageDialog(null,"Nome localizado, destruindo...");
-            //Destruição do nome
-            hashMap.remove(pessoaDestruida);
+        var value = getKey(hashMap,pessoaDestruida);
+
+        if(value != null) {
+            hashMap.remove(value,pessoaDestruida);
+            contador--;
+            JOptionPane.showMessageDialog(null,"Nome destruido");
+        } else {
+            JOptionPane.showMessageDialog(null,"Nome não pode ser destruído, pois não existe");
         }
     }
 
     private static void pesquisarNome(HashMap<Integer, String> hashMap, String pessoaPesquisada) {
-        if(hashMap.containsValue(pessoaPesquisada)) {
-            JOptionPane.showMessageDialog(null,"Nome '");
+        var value = getKey(hashMap,pessoaPesquisada);
+
+        if(value != null) {
+            JOptionPane.showMessageDialog(null,"Nome '"+pessoaPesquisada+"' localizado | Chave: "
+                    +value);
+        } else {
+            JOptionPane.showMessageDialog(null,"Nome não encontrado!!!!");
         }
-
-
     }
 
     private static void adicionarAoHash(HashMap<Integer, String> hashMap, String pessoa) {
-        if (contador < 50) {
+        if (contador < MEMORY_TOTAL) {
             contador++;
             System.out.println("Contador: "+contador);
 
