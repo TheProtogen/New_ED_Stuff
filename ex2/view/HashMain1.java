@@ -25,18 +25,18 @@ public class HashMain1 {
 
             switch(escolha) {
                 case 0:
-                    String pessoa = JOptionPane.showInputDialog("Digite um número");
-                    adicionarAoHash(hashMap,pessoa.toUpperCase());
+                    String pessoaNome = JOptionPane.showInputDialog("Digite o nome a ser adicionado");
+                    adicionarAoHash(hashMap,pessoaNome.toUpperCase());
                     break;
                 case 1:
                     System.out.println(hashMap);
                     break;
                 case 2:
-                    String pessoaPesquisada = JOptionPane.showInputDialog("Digite um número");
+                    String pessoaPesquisada = JOptionPane.showInputDialog("Digite o nome a ser pesquisado");
                     pesquisarNome(hashMap,pessoaPesquisada.toUpperCase());
                     break;
                 case 3:
-                    String pessoaDestruida = JOptionPane.showInputDialog("Digite um número");
+                    String pessoaDestruida = JOptionPane.showInputDialog("Digite o nome a ser destruido");
                     destruirNome(hashMap,pessoaDestruida.toUpperCase());
                     break;
                 case 4:
